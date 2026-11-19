@@ -1,0 +1,28 @@
+name: ReportMenu
+version: 1.1.0
+main: ru.reportmenu.ReportMenuPlugin
+api-version: '1.21'
+description: Жалобы на игроков через меню
+commands:
+  report:
+    description: Пожаловаться на игрока
+    usage: /report <ник>
+    aliases: [rep]
+    permission: reportmenu.use
+  reports:
+    description: Список жалоб для персонала
+    usage: /reports [player|author|reason <значение>] | history <ник> | reload
+    permission: reportmenu.manage
+permissions:
+  reportmenu.use:
+    description: Отправлять жалобы
+    default: true
+  reportmenu.notify:
+    description: Получать уведомления о новых жалобах
+    default: op
+  reportmenu.manage:
+    description: Открывать /reports, брать жалобы в работу, закрывать, смотреть историю
+    default: op
+  reportmenu.bypass:
+    description: Не иметь кулдауна на жалобы
+    default: op

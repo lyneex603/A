@@ -1,0 +1,126 @@
+prefix: "&8[&cЖалобы&8] &7"
+
+# Пауза между жалобами одного игрока (секунды). 0 = выключено
+cooldown-seconds: 60
+# Можно ли жаловаться на себя
+allow-report-self: false
+# Запретить повторную жалобу на того же игрока, пока первая не закрыта
+prevent-duplicates: true
+# На сколько часов блокируется /report у автора ложной жалобы. 0 = не блокировать
+false-report-block-hours: 24
+# Через сколько дней удалять закрытые жалобы (из истории они тоже пропадут). 0 = не удалять
+purge-closed-after-days: 90
+# Звук персоналу при новой жалобе (пусто = без звука)
+notify-sound: "entity.experience_orb.pickup"
+date-format: "dd.MM HH:mm"
+
+# Комментарий: после выбора причины игрок пишет в чат, что произошло
+comment:
+  min-length: 10
+  max-length: 200
+  timeout-seconds: 90
+  cancel-words: [cancel, отмена]
+
+# Авто-флаг: если на одного игрока за N минут пожаловались X разных людей,
+# его жалобы в /reports подсвечиваются и идут первыми
+autoflag:
+  count: 3
+  minutes: 60
+
+menus:
+  reason-title: "&8Жалоба на {player}"
+  reports-title: "&8Жалобы (стр. {page}/{pages})"
+  click-hint: "&eНажмите, чтобы выбрать причину"
+  report-name: "&e#{id} &c{player}"
+  report-name-flagged: "&c⚠ &e#{id} &c{player}"
+  # {comment} и {flag} — особые строки (комментарий переносится, флаг показывается только при авто-флаге)
+  report-lore:
+    - "&7Статус: {status}"
+    - "&7Причина: &f{reason}"
+    - "&7От: &f{reporter}"
+    - "&7Время: &f{time}"
+    - "&7Комментарий:"
+    - "{comment}"
+    - "{flag}"
+    - ""
+    - "&aЛКМ &7— взять в работу"
+    - "&aПКМ &7— закрыть (жалоба верная)"
+    - "&cShift+ПКМ &7— ложная жалоба (блок автору)"
+    - "&eQ &7— фильтр по нарушителю"
+    - "&eCtrl+Q &7— фильтр по автору"
+  flag-line: "&c⚠ Несколько жалоб на игрока за {minutes} мин."
+  prev-page: "&e« Назад"
+  next-page: "&eВперёд »"
+  info-name: "&6Открытых жалоб: &f{count}"
+  filter-target: "&7Фильтр: нарушитель &f{value}"
+  filter-author: "&7Фильтр: автор &f{value}"
+  filter-reason: "&7Фильтр: причина &f{value}"
+  filter-reset: "&cСбросить фильтр"
+
+statuses:
+  NEW: "&cновая"
+  IN_PROGRESS: "&eв работе (&f{handler}&e)"
+  CLOSED: "&aрешена"
+  FALSE: "&8ложная"
+
+# Причины в меню (до 28 штук). Ключ любой (его же используют в /reports reason <ключ>).
+# hint — подсказка игроку, что нужно описать в комментарии.
+reasons:
+  cheats:
+    name: "&cЧиты"
+    material: DIAMOND_SWORD
+    description: "Читы, запрещённые моды"
+    hint: "какой чит или мод и что именно вы увидели (летает, быстро бьёт, видит сквозь стены и т.п.)."
+  abuse:
+    name: "&6Оскорбления"
+    material: WRITABLE_BOOK
+    description: "Мат, оскорбления, токсичность"
+    hint: "кого и как оскорбили, что именно написали."
+  spam:
+    name: "&eСпам / реклама"
+    material: PAPER
+    description: "Флуд, реклама других серверов"
+    hint: "что и где писал игрок, что рекламировал."
+  bug:
+    name: "&bИспользование багов"
+    material: REDSTONE
+    description: "Дюпы и другие баги"
+    hint: "какой баг и как игрок его использует."
+  other:
+    name: "&7Другое"
+    material: BARRIER
+    description: "Другая причина"
+    hint: "подробно опишите, что случилось."
+
+messages:
+  only-player: "&cЭта команда только для игроков."
+  usage: "&cИспользование: &f/report <ник>"
+  reports-usage: "&cИспользование: &f/reports [player|author|reason <значение>] &7| &f/reports history <ник> &7| &f/reports reload"
+  not-found: "&cИгрок &f{player} &cне найден."
+  self: "&cНа себя пожаловаться нельзя."
+  cooldown: "&cПодождите ещё &f{seconds} с. &cперед следующей жалобой."
+  blocked: "&cВы не можете отправлять жалобы ещё &f{time}&c: ваша прошлая жалоба признана ложной."
+  duplicate: "&cВы уже отправили жалобу на &f{player}&c, её ещё не рассмотрели."
+  comment-prompt: "&eНапишите в чат, что произошло (причина: &f{reason}&e). Минимум &f{min} &eсимволов, время: &f{seconds} с. &eДля отмены напишите &f{cancel}&e."
+  comment-hint: "&7Опишите: {hint}"
+  comment-short: "&cСлишком коротко, нужно минимум {min} символов. Опишите подробнее."
+  comment-cancelled: "&7Жалоба отменена."
+  comment-timeout: "&cВремя вышло, жалоба не отправлена."
+  sent: "&aЖалоба на &f{player} &aотправлена (причина: &f{reason}&a). Спасибо!"
+  notify: "&c{reporter} &7пожаловался на &c{player} &7— &f{reason} &8(#{id}) &7/reports"
+  autoflag: "&4⚠ &cНа игрока &f{player} &cпожаловались {count}+ человек за {minutes} мин! &7/reports"
+  joined-open: "&eОткрытых жалоб: &f{count}&e. Откройте список: /reports"
+  taken: "&aЖалоба #{id} взята в работу."
+  already-taken: "&cЖалобу уже взял &f{moderator}&c."
+  closed: "&aЖалоба #{id} закрыта как решённая."
+  closed-false: "&eЖалоба #{id} признана ложной, автор &f{player} &eзаблокирован на &f{hours} ч."
+  already-closed: "&cЭта жалоба уже закрыта."
+  result-ok: "&aВаша жалоба #{id} на &f{player} &aрассмотрена (модератор: &f{moderator}&a). Спасибо за помощь!"
+  result-false: "&cВаша жалоба #{id} на &f{player} &cпризнана ложной. Отправка жалоб заблокирована на &f{hours} ч."
+  reloaded: "&aКонфиг перезагружен."
+  unknown-reason: "&cТакой причины нет: &f{reason}"
+  history-empty: "&7На игрока &f{player} &7жалоб нет."
+  history-header: "&6История жалоб на &f{player}"
+  history-summary: "&7Всего: &f{total} &7| Открытых: &f{open} &7| Решённых: &a{solved} &7| Ложных: &8{false}"
+  history-reasons: "&7По причинам: &f{reasons}"
+  history-line: "&8#{id} &7[{status}&7] &f{reason}&7: &f{comment}"
